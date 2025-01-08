@@ -1,0 +1,37 @@
+const int controle = 10;
+const int led = 13;
+const int botao = 9;
+String comando = "false";
+void setup() {
+  Serial.begin(9600);
+  pinMode(controle, OUTPUT);
+  pinMode(botao, INPUT);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    comando = Serial.readStringUntil('\n');
+    comando.trim();
+    Serial.read();
+    if (comando == "True") {
+    ativa_portao();
+    comando = "false";
+    }
+  }
+  if (digitalRead(botao) == HIGH) {
+    ativa_portao();
+  }
+  delay(100);
+  }
+
+void ativa_portao() {
+  digitalWrite(controle, HIGH);
+  delay(1000);
+  digitalWrite(controle, LOW);
+}
+
+void pisca() {
+  digitalWrite(led, HIGH);
+  delay(500);
+  digitalWrite(led, LOW);
+}
